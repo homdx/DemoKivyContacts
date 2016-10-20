@@ -1,0 +1,29 @@
+#:kivy 1.9.1
+
+###############################################################################
+#
+#                             NAVIGATION DRAWER
+#
+###############################################################################
+<NavDrawer>:
+    NavigationDrawerIconButton:
+        icon: 'settings'
+        text: app.data.string_lang_settings
+        on_release: app.events_program(self.text)
+    NavigationDrawerIconButton:
+        icon: 'view-module'
+        text: app.data.string_lang_plugin
+        on_release: app.events_program(self.text)
+    NavigationDrawerIconButton:
+        icon: 'info'
+        text: app.data.string_lang_license
+        on_release: app.events_program(self.text)
+    NavigationDrawerIconButton:
+        icon: 'collection-text'
+        text: 'About'
+        on_release: app.events_program(self.text)
+    NavigationDrawerIconButton:
+        icon: 'close-circle'
+        text: app.data.string_lang_exit_key
+        on_release: app.events_program(app.data.string_lang_exit_key)
+

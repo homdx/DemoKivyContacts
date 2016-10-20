@@ -1,0 +1,36 @@
+#:kivy 1.9.1
+#:import MDLabel kivymd.label.MDLabel
+#:import MDFloatingActionButton kivymd.button.MDFloatingActionButton
+
+###############################################################################
+#
+#                ПУСТОЙ ЭКРАН С КНОПКОЙ 'ДОБАВИТЬ КОНТАКТЫ/ГРУПП НЕТ'
+#
+###############################################################################
+<EmptyScreen>:
+    id: empty_screen
+    Image:
+        source: root.image
+        pos_hint: {'center_x': .5, 'center_y': .6}
+        opacity: .5
+
+    MDLabel:
+        id: label
+        font_style: 'Headline'
+        theme_text_color: 'Primary'
+        color: app.data.text_color
+        text: root.text
+        halign: 'center'
+
+    MDFloatingActionButton:
+        id: float_act_btn
+        icon: 'plus'
+        size_hint: None, None
+        size: dp(56), dp(56)
+        opposite_colors: True  # иконка белого/черного цветов
+        elevation_normal: 8  # длинна тени
+        pos_hint: {'center_x': .9, 'center_y': .1}
+        background_color: app.data.floating_button_color
+        background_color_down: app.data.floating_button_down_color
+        disabled: root.disabled
+        on_release: root.callback()

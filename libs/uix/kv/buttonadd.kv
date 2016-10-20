@@ -1,0 +1,15 @@
+#:kivy 1.9.1
+#:import MDFloatingActionButton kivymd.button.MDFloatingActionButton
+
+[ButtonAdd@MDFloatingActionButton]:
+    id: float_act_btn
+    icon: 'plus'
+    size_hint: None, None
+    size: dp(56), dp(56)
+    opposite_colors: True
+    elevation_normal: 8
+    pos_hint: {'center_x': .9, 'center_y': .1}
+    background_color: app.data.floating_button_color
+    background_color_down: app.data.floating_button_down_color
+    disabled: ctx.disabled
+    on_release: ctx.events_callback()

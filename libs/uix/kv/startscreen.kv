@@ -1,0 +1,85 @@
+#:kivy 1.9.1
+#:import CreateContact libs.uix.createcontact.CreateContact
+#:import CallContact libs.uix.callcontact.CallContact
+#:import EmptyScreen libs.uix.emptyscreen.EmptyScreen
+#:import Toolbar kivymd.toolbar.Toolbar
+#:import MDTabbedPanel kivymd.tabs.MDTabbedPanel
+#:import MDTab kivymd.tabs.MDTab
+
+###############################################################################
+#
+#                              СТАРТОВЫЙ ЭКРАН
+#
+###############################################################################
+<StartScreen>:
+    Screen:
+        name: 'root_screen'
+        BoxLayout:
+            #canvas:
+            #    Rectangle:
+            #        pos: self.pos
+            #        size: self.size
+            #        source: 'data/images/background.jpg'
+            orientation: 'vertical'
+            ####################################################################
+            #
+            #                            ACTION BAR
+            #
+            ####################################################################
+            Toolbar:
+                #canvas.before:
+                #    Rectangle:
+                #        pos: self.pos
+                #        size: self.size
+                #        source: 'data/images/background_toolbar.jpg'
+
+                id: action_bar
+                #background_color: app.data.alpha
+                background_color: app.theme_cls.primary_color
+                title: app.data.string_lang_contacts
+                left_action_items: [['menu', lambda x: app.nav_drawer.toggle()]]
+                right_action_items: [['more-vert', lambda x: None]]
+            ####################################################################
+            #
+            #                           TABBED PANEL
+            #
+            ####################################################################
+            MDTabbedPanel:
+                id: tabs
+                tab_display_mode: 'text'
+                #tab_color: app.data.alpha
+                tab_text_color: app.data.tab_text_color
+                tab_indicator_color: app.data.tab_indicator_color
+
+                MDTab:
+                    name: 'contacts'
+                    text: app.data.string_lang_contacts
+                    on_tab_press: app.on_tab_press(self.name)
+                    ScreenManager:
+                        id: screen_manager_tab_contacts
+                        Screen:
+                            name: 'empty_contacts_list'
+                            EmptyScreen:
+                                image: 'data/images/contacts.png'
+                                text: app.data.string_lang_add_contacts
+                                callback: app.show_form_create_contact
+                                disabled: False
+                        Screen:
+                            name: 'create_contact'
+                            CreateContact:
+                MDTab:
+                    name: 'groups'
+                    text: app.data.string_lang_groups
+                    on_tab_press: app.on_tab_press(self.name)
+                    ScreenManager:
+                        id: screen_manager_tab_groups
+                        Screen:
+                            name: 'empty_groups_list'
+                            EmptyScreen:
+                                image: 'data/images/contacts.png'
+                                text: app.data.string_lang_not_groups
+                                callback: lambda: app.create_group()
+                                disabled: False
+    Screen:
+        name: 'call_contact'
+        CallContact:
