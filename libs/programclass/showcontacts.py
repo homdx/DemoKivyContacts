@@ -26,7 +26,6 @@ class ShowContacts(object):
         };
 
         '''
-
         if not self._contacts_items:
             # Создаем список контактов.
             self._contacts_list = ContactsList()
@@ -44,7 +43,7 @@ class ShowContacts(object):
             self._contacts_list.add_widget(button_add_contact)
             self.add_screens(
                 'contact_list', self.manager_tab_contacts, self._contacts_list
-            )
+            ) 
         else:
             # Добавляет контакт к существующему списку
             # и выводит список на экран.
