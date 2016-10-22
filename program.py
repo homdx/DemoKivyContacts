@@ -1,4 +1,3 @@
-#! /usr/bin/python3.4
 # -*- coding: utf-8 -*-
 #
 # program.py
@@ -12,16 +11,21 @@ from kivy.uix.screenmanager import Screen
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import ConfigParser
-from kivy.properties import ObjectProperty
+from kivy.clock import Clock, _default_time
+from kivy.properties import ObjectProperty, DictProperty
 
 from libs.uix import customsettings
 from libs.uix.dialogs import dialog
 from libs.uix.startscreen import StartScreen
+
 from libs import programdata as data
 from libs import programclass as _class
 
 from kivymd.theming import ThemeManager
 from kivymd.navigationdrawer import NavigationDrawer
+
+
+MAX_TIME = 1/60.
 
 
 class NavDrawer(NavigationDrawer):
@@ -44,6 +48,7 @@ class Program(App, _class.Plugin, _class.About, _class.License,
         Window.bind(on_keyboard=self.events_program)
 
         self.window = Window
+        self.dialog_load_contact = None
         self.open_exit_dialog = None
         self.scren_add_groups = None  # kivy.lang.builder.AddContactAddGroups
         self.data = data
@@ -87,9 +92,21 @@ class Program(App, _class.Plugin, _class.About, _class.License,
         self.old_info_groups = self.info_groups
 
         if self.info_contacts.__len__():  # Activity со списком контактов
-            self.show_contacts(self.info_contacts)
+            Clock.schedule_interval(self.load_contacts, 0)
 
         return self.screen
+
+    def load_contacts(self, interval):
+        if not self.dialog_load_contact:
+            self.dialog_load_contact = dialog(
+                title=data.string_lang_wait[:-3],
+                text=data.string_lang_contacts_load, dismiss=False
+            )
+
+        while _default_time() < (Clock.get_time() + MAX_TIME):    
+            self.show_contacts(self.info_contacts)
+            self.dialog_load_contact.dismiss()
+            Clock.unschedule(self.load_contacts)
 
     def events_program(self, *args):
         '''Вызывается при выборе одного из пунктов меню программы.'''
