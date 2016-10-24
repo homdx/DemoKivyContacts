@@ -8,9 +8,8 @@
 from kivy.lang import Builder
 
 from libs.uix.contactslist import ContactsList
-from libs.uix.callcontact import CallContact
 from libs.uix.lists import Lists, RightButton
-from libs.uix.dialogs import dialog, card
+from libs.uix.dialogs import card
 
 import kivymd.snackbar as Snackbar
 
