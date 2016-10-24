@@ -5,10 +5,8 @@
 # Создает новую группу контактов и выводит ее на экран.
 #
 
-from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.scrollview import ScrollView
-from kivy.lang import Builder
 
 from libs.uix.dialogs import input_dialog
 from libs.uix.contactslist import ContactsList
