@@ -8,6 +8,7 @@
 import os
 import pickle
 
+from libs.createpreviousportrait import create_previous_portrait
 from libs.uix.dialogs import dialog, file_dialog, card
 
 import kivymd.snackbar as Snackbar
@@ -32,8 +33,17 @@ class ShowFormCreateContact(object):
             dialog_manager.dismiss()
             if os.path.splitext(path_to_avatar)[1] in [
                     '.png', '.jpg',  '.jpeg', '.gif']:
-                self._path_to_avatar = path_to_avatar
-                self._form_create_contact.ids.avatar.source = path_to_avatar
+
+                path_to_dir_image, name_image = os.path.split(path_to_avatar)
+                name_image = '{}{}'.format(
+                    os.path.splitext(name_image)[0], '.png'
+                )
+                new_path_to_avatar = '{}/data/contacts/previous/{}'.format(
+                    self.directory, name_image
+                )
+                create_previous_portrait(path_to_avatar, new_path_to_avatar)
+                self._path_to_avatar = new_path_to_avatar
+                self._form_create_contact.ids.avatar.source = new_path_to_avatar
             else:
                 dialog(title=self.title, text=self.data.string_avatar_wrong)
 
@@ -103,6 +113,8 @@ class ShowFormCreateContact(object):
     def _check_existence_contacts(self):
         if not os.path.exists('{}/data/contacts'.format(self.directory)):
             os.mkdir('{}/data/contacts'.format(self.directory))
+        if not os.path.exists('{}/data/contacts/previous'.format(self.directory)):
+            os.mkdir('{}/data/contacts/previous'.format(self.directory))
         if not os.path.exists('{}/data/contacts/contacts.ini'.format(
                 self.directory)):
             self._save_data()

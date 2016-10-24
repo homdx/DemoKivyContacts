@@ -20,13 +20,14 @@
         height: root.height * 30 // 100  # 30% от высоты экрана
         pos: 0, call_contact.height - self.size[1]
 
-    Widget:
-        canvas:
-            Ellipse:
-                pos: self.pos
-                size: 150, 150
-                source: root.avatar if root.avatar else 'data/logo/kivy-icon-128.png'
-        pos: (call_contact.width // 2) - 75, call_contact.height * 61 // 100
+    #Image:
+    #    source: root.avatar if root.avatar else 'data/logo/kivy-icon-128.png'
+    #    pos: (call_contact.width // 2) - (self.width // 2), call_contact.height * 61 // 100
+    #    size_hint: None, None
+    #    size: root.size
+    Image:
+        source: root.avatar if root.avatar else 'data/logo/kivy-icon-128.png'
+        pos: self.pos[0], call_contact.height * 21 // 100
 
     BoxLayout:
         orientation: 'vertical'
