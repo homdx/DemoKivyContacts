@@ -42,7 +42,7 @@ RUN useradd --create-home --shell /bin/bash ${USER}
 RUN usermod -append --groups sudo ${USER}
 RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-WORKDIR ${WORK_DIR}
+RUN WORKDIR ${WORK_DIR}
 
 #COPY . .
 
@@ -81,7 +81,8 @@ RUN set -ex \
   && echo "${CRYSTAX_HASH}  crystax-${CRYSTAX_NDK_VERSION}.tar.xz" | sha256sum -c \
   && time tar -xf crystax-${CRYSTAX_NDK_VERSION}.tar.xz && rm ~/.buildozer/crystax-${CRYSTAX_NDK_VERSION}.tar.xz \
   && echo '-----Python 3 ----' && cd ${HOME_DIR}/testapp && time buildozer android debug || echo "Fix build apk" \
-  && sudo rm -rf ${HOME_DIR}/.buildozer && date
+  && cp -v /home/user/testapp/.buildozer/android/platform/build/dists/demokivycontacts/bin/DemoKivyContacts-0.1-debug.apk ${WORK_DIR} \
+  && date && sudo rm -rf ${HOME_DIR}/.buildozer && date
 
 CMD tail -f /var/log/faillog
 
