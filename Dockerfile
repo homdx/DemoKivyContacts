@@ -42,7 +42,7 @@ RUN useradd --create-home --shell /bin/bash ${USER}
 RUN usermod -append --groups sudo ${USER}
 RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-RUN WORKDIR ${WORK_DIR}
+WORKDIR ${WORK_DIR}
 
 #COPY . .
 
@@ -65,7 +65,7 @@ RUN cd /tmp/ && buildozer init && buildozer android adb -- version \
 RUN sed s/'name="java.source" value="1.5"'/'name="java.source" value="7"'/ -i ${HOME_DIR}/.buildozer/android/platform/android-sdk-20/tools/ant/build.xml
 RUN sed s/'name="java.target" value="1.5"'/'name="java.target" value="7"'/ -i ${HOME_DIR}/.buildozer/android/platform/android-sdk-20/tools/ant/build.xml
 
-mkdir ${HOME_DIR}/testapp 
+RUN mkdir ${HOME_DIR}/testapp 
 
 ADD . ${HOME_DIR}/testapp
 
@@ -81,8 +81,8 @@ RUN set -ex \
   && echo "${CRYSTAX_HASH}  crystax-${CRYSTAX_NDK_VERSION}.tar.xz" | sha256sum -c \
   && time tar -xf crystax-${CRYSTAX_NDK_VERSION}.tar.xz && rm ~/.buildozer/crystax-${CRYSTAX_NDK_VERSION}.tar.xz \
   && echo '-----Python 3 ----' && cd ${HOME_DIR}/testapp && time buildozer android debug || echo "Fix build apk" \
-  && cp -v /home/user/testapp/.buildozer/android/platform/build/dists/demokivycontacts/bin/DemoKivyContacts-0.1-debug.apk ${WORK_DIR} \
-  && date && sudo rm -rf ${HOME_DIR}/.buildozer && date
+  && cp -v cp /home/user/testapp/.buildozer/android/platform/build/dists/demokivycontacts/bin/DemoKivyContacts-0.1-debug.apk ${HOME_DIR} \
+  && date &&  sudo rm -rf ${HOME_DIR}/.buildozer && date
 
 CMD tail -f /var/log/faillog
 
