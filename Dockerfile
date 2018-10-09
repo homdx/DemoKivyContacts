@@ -81,7 +81,7 @@ RUN set -ex \
   && echo "${CRYSTAX_HASH}  crystax-${CRYSTAX_NDK_VERSION}.tar.xz" | sha256sum -c \
   && time tar -xf crystax-${CRYSTAX_NDK_VERSION}.tar.xz && rm ~/.buildozer/crystax-${CRYSTAX_NDK_VERSION}.tar.xz \
   && echo '-----Python 3 ----' && cd ${HOME_DIR}/testapp && time buildozer android debug || echo "Fix build apk" \
-  && cp -v cp /home/user/testapp/.buildozer/android/platform/build/dists/demokivycontacts/bin/DemoKivyContacts-0.1-debug.apk ${HOME_DIR} \
+  && cp -v /home/user/testapp/.buildozer/android/platform/build/dists/demokivycontacts/bin/DemoKivyContacts-0.1-debug.apk ${HOME_DIR} \
   && date &&  sudo rm -rf ${HOME_DIR}/.buildozer && date
 
 CMD tail -f /var/log/faillog
